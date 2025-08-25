@@ -1,6 +1,6 @@
-# Integração Web API
+# 🚀 Integração Web API com BrasilAPI
 
-## Visão Geral
+## 📖 Visão Geral
 Este projeto é uma **API ASP.NET Core versão 8.0** para integração com a **BrasilAPI**, permitindo consultar e importar informações de bancos e endereços (CEPs) para um banco de dados local.  
 O projeto foi desenvolvido seguindo a **arquitetura limpa** (Clean Architecture), separando responsabilidades em camadas:
 
@@ -14,29 +14,29 @@ O projeto implementa **autenticação JWT** e tratamento de erros centralizado a
 
 ---
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-### Bancos:
+### 🏦 Bancos:
 
 - Listar todos os bancos disponíveis na BrasilAPI.
 - Listar todos os bancos disponíveis no banco local.
 - Consultar banco por código no BrasilApi.
 - Importar bancos para o banco de dados local.
 
-### Endereços:
+### 📍 Endereços:
 
 - Listar todos os endereços (CEPs) armazenados localmente.
 - Consultar endereço por CEP.
 - Importar endereços da BrasilAPI para o banco de dados local.
 
-### Autenticação 
+### 🔐 Autenticação 
 
 - Controle de autenticação e autorização para operações de importação.
 - O cadastro de usuários cria automaticamente o role User.
 - Operações de importação (POST) exigem autenticação via JWT Bearer Token.
 - Se registre e autentique no endpoint de Login, Copie o token e cole no Cabeçalho Authorize com a palavra Bearer + Token Copiado
 
-## Tratamento de Erros
+## 🛡️ Tratamento de Erros
 O projeto utiliza Middleware customizado (ErrorHandlingMiddleware) que captura exceções personalizadas:
 
 - NotFoundException: Retorna 404 Not Found.
@@ -45,16 +45,14 @@ O projeto utiliza Middleware customizado (ErrorHandlingMiddleware) que captura e
 
 Qualquer outro erro inesperado retorna 500 Internal Server Error.
 
-## Testes Unitários
+## 🧪 Testes Unitários
 - As controllers possuem testes unitários no projeto IntegracaoWebApi.Tests.
 
 ```bash
-
 dotnet test
-
 ```
 
-## Instruções de Instalação
+## 🛠️ Instruções de Instalação
 
 ### Pré-requisitos
 
@@ -86,6 +84,6 @@ cd IntegracaoWebApi
 
 - dotnet run --project IntegracaoWebApi
 
-## DOCUMENTAÇÃO DA API EXTERNNA
+## 🔗 DOCUMENTAÇÃO DA API EXTERNNA
 
 - https://brasilapi.com.br/
