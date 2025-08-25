@@ -74,5 +74,32 @@ namespace IntegracaoWebApi.Controllers
 
             return CreatedAtAction(nameof(GetByCode), new { code = banco.Codigo }, banco);
         }
+        /// <summary>
+        /// Busca bancos pelo nome aproximado no banco de dados local.
+        /// </summary>
+        /// <param name="nome">Parte do nome do banco</param>
+        /// <returns>Lista de bancos encontrados</returns>
+        /// <response code="200">Sucesso</response>
+        [HttpGet("buscar/{nome}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Banco>>> BuscarPorNome(string nome)
+        {
+            var bancos = await _bancoService.BuscarPorNome(nome);
+            return Ok(bancos);
+        }
+
+        /// <summary>
+        /// Retorna bancos usando consulta SQL pura.
+        /// </summary>
+        /// <returns>Lista de bancos filtrados e ordenados</returns>
+        /// <response code="200">Sucesso</response>
+        [HttpGet("bancosComCodigoMaiorQue100")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Banco>>> GetBancosViaSql()
+        {
+            var bancos = await _bancoService.GetBancosViaSql();
+            return Ok(bancos);
+        }
+
     }
 }

@@ -6,5 +6,8 @@ namespace IntegracaoWebApi.Core.Interfaces
     {
         Task AddRangeAsync(List<Banco> bancos);
         Task<List<Banco>> GetAllAsync();
+        Task<List<Banco>> BuscarPorNomeAproximado(string nome);
+        Task<List<Banco>> GetBancosViaSql();
+
     }
 }

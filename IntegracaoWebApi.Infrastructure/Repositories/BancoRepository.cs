@@ -30,5 +30,19 @@ namespace IntegracaoWebApi.Infrastructure.Repositories
 
         public async Task<List<Banco>> GetAllAsync() =>
             await _context.Bancos.AsNoTracking().ToListAsync();
+
+        public async Task<List<Banco>> BuscarPorNomeAproximado(string nome)
+        {
+            return await _context.Bancos
+                .Where(b => EF.Functions.Like(b.Nome, $"%{nome}%"))
+                .ToListAsync();
+        }
+        public async Task<List<Banco>> GetBancosViaSql()
+        {
+            return await _context.Bancos
+                .FromSqlRaw("SELECT * FROM Bancos WHERE Codigo > 100 ORDER BY Nome")
+                .ToListAsync();
+        }
+
     }
 }

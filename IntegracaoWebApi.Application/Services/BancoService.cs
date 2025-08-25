@@ -56,6 +56,10 @@ namespace IntegracaoWebApi.Application.Services
             var persisted = await GetBancoByCodeAsync(code);
             return persisted;
         }
+        public async Task<List<Banco>> BuscarPorNome(string nome) =>
+            await _bancoRepository.BuscarPorNomeAproximado(nome);
 
+        public async Task<List<Banco>> GetBancosViaSql() =>
+            await _bancoRepository.GetBancosViaSql();
     }
 }

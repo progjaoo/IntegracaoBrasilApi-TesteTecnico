@@ -8,5 +8,7 @@ namespace IntegracaoWebApi.Core.Interfaces
         Task<Banco?> GetBancoByCodeAsync(int code);
         Task<List<Banco>> GetBancosAsync();
         Task<Banco?> ImportarBancoPorCodigo(int code);
+        Task<List<Banco>> BuscarPorNome(string nome);
+        Task<List<Banco>> GetBancosViaSql();
     }
 }
