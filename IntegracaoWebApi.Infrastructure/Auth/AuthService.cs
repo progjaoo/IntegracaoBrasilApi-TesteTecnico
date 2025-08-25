@@ -3,6 +3,7 @@ using IntegracaoWebApi.Application.Services;
 using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace IntegracaoWebApi.Infrastructure.Auth
 {
@@ -39,7 +40,7 @@ namespace IntegracaoWebApi.Infrastructure.Auth
         public async Task<AuthResponse?> RegisterAsync(RegisterRequest request)
         {
             var exists = await _userRepo.GetByUsernameAsync(request.Username);
-            if (exists is not null) return null; 
+            if (exists is not null) return null;
 
             var user = new User { Username = request.Username, Role = "User" };
             user.PasswordHash = _hasher.HashPassword(user, request.Password);

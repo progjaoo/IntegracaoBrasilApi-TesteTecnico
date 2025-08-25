@@ -1,8 +1,7 @@
 ﻿using Flurl.Http;
 using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace IntegracaoWebApi.Application.Services
 {

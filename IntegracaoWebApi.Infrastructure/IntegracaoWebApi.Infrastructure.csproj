@@ -1,28 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <NoWarn>$(NoWarn);1591</NoWarn>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.19" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IntegracaoWebApi.Application\IntegracaoWebApi.Application.csproj" />
     <ProjectReference Include="..\IntegracaoWebApi.Core\IntegracaoWebApi.Core.csproj" />
-    <ProjectReference Include="..\IntegracaoWebApi.Infrastructure\IntegracaoWebApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,11 @@
 using IntegracaoWebApi.Application.Services;
-using IntegracaoWebApi.Core.Exception;
 using IntegracaoWebApi.Core.Interfaces;
 using IntegracaoWebApi.Infrastructure.Auth;
 using IntegracaoWebApi.Infrastructure.Data;
 using IntegracaoWebApi.Infrastructure.Repositories;
+using IntegracaoWebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -30,7 +29,7 @@ builder.Services.AddAuthentication(opt =>
 })
 .AddJwtBearer(opt =>
 {
-    opt.RequireHttpsMetadata = false; 
+    opt.RequireHttpsMetadata = false;
     opt.SaveToken = true;
     opt.TokenValidationParameters = new()
     {

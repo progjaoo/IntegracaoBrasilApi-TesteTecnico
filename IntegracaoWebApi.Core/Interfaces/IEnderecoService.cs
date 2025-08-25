@@ -1,5 +1,4 @@
 ﻿using IntegracaoWebApi.Core.Entities;
-using Microsoft.AspNetCore.Mvc;
 
 namespace IntegracaoWebApi.Core.Interfaces
 {

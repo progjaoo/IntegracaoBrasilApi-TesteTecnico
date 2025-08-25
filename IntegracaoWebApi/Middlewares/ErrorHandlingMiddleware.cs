@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using static IntegracaoWebApi.Core.Exception.Exceptions;
 
-namespace IntegracaoWebApi.Core.Exception
+namespace IntegracaoWebApi.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
