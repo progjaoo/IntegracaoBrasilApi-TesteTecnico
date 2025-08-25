@@ -22,8 +22,8 @@ O projeto implementa **autenticação JWT** e tratamento de erros centralizado a
 - Listar todos os bancos disponíveis no banco local.
 - Consultar banco por código no BrasilApi.
 - Importar bancos para o banco de dados local.
-- Buscar bancos pelo nome aproximado (usando EF.Functions.Like) **Parte da pedida de consultas complexas**
-- Query SQL pura **Parte da pedida de consultas complexas**
+- Buscar bancos pelo nome aproximado (usando EF.Functions.Like) -> **Parte da pedida de consultas complexas**
+- Query SQL pura -> **Parte da pedida de consultas complexas**
 - 
 ### 📍 Endereços:
 
