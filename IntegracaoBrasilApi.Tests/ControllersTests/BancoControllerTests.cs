@@ -25,21 +25,14 @@ namespace IntegracaoWebApi.Tests.ControllersTests
                 Ispb = "00122327"
             };
 
-            var brasilApiServiceMock = new Mock<IBancoService>();
-            brasilApiServiceMock.Setup(s => s.GetBancoByCodeAsync(codigo))
-                                .ReturnsAsync(bancoMock);
-
-            var bancoRepositoryMock = new Mock<IBancoRepository>();
-            bancoRepositoryMock.Setup(r => r.AddRangeAsync(It.IsAny<List<Banco>>()))
-                               .Returns(Task.CompletedTask);
-
-            bancoRepositoryMock.Setup(r => r.GetAllAsync())
-                               .ReturnsAsync(new List<Banco> { bancoMock });
+            var bancoServiceMock = new Mock<IBancoService>();
+            bancoServiceMock.Setup(s => s.ImportarBancoPorCodigo(codigo))
+                            .ReturnsAsync(bancoMock);
 
             var loggerMock = Mock.Of<ILogger<BancoController>>();
 
             var controller = new BancoController(
-                brasilApiServiceMock.Object,
+                bancoServiceMock.Object,
                 loggerMock
             );
 
@@ -54,8 +47,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             Assert.Equal(bancoMock.Nome, returnedBanco.Nome);
             Assert.Equal(bancoMock.Ispb, returnedBanco.Ispb);
 
-            brasilApiServiceMock.Verify(s => s.GetBancoByCodeAsync(codigo), Times.Once);
-            bancoRepositoryMock.Verify(r => r.AddRangeAsync(It.Is<List<Banco>>(l => l.Contains(bancoMock))), Times.Once);
+            bancoServiceMock.Verify(s => s.ImportarBancoPorCodigo(codigo), Times.Once);
         }
     }
 }

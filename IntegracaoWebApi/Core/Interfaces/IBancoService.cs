@@ -1,5 +1,4 @@
-﻿using IntegracaoWebApi.Application.DTOs;
-using IntegracaoWebApi.Core.Entities;
+﻿using IntegracaoWebApi.Core.Entities;
 
 namespace IntegracaoWebApi.Core.Interfaces
 {

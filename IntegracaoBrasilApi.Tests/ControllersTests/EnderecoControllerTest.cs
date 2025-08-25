@@ -17,7 +17,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
         public async Task Deve_retornar_endereco_quando_existir()
         {
             // Arrange
-            var cep = "27313130"; //ENDERECO DA MINHA CASA :D
+            var cep = "27313130";
             var enderecoMock = new Endereco
             {
                 Cep = cep,
@@ -27,12 +27,8 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             };
 
             var enderecoServiceMock = new Mock<IEnderecoService>();
-            enderecoServiceMock.Setup(s => s.GetEnderecoByCepAsync(cep))
-                                .ReturnsAsync(enderecoMock);
-
-            var enderecoRepositoryMock = new Mock<IEnderecoRepository>();
-            enderecoRepositoryMock.Setup(r => r.AddAsync(enderecoMock))
-                                  .Returns(Task.CompletedTask);
+            enderecoServiceMock.Setup(s => s.ImportarPorCep(cep))
+                               .ReturnsAsync(enderecoMock);
 
             var loggerMock = Mock.Of<ILogger<EnderecosController>>();
 
@@ -42,18 +38,17 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             );
 
             // Act
-            var result = await controller.GetByCep(cep);
+            var result = await controller.ImportarPorCep(cep);
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var returnedEndereco = Assert.IsType<Endereco>(okResult.Value);
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result);
+            var returnedEndereco = Assert.IsType<Endereco>(createdResult.Value);
 
             Assert.Equal(cep, returnedEndereco.Cep);
             Assert.Equal(enderecoMock.Cidade, returnedEndereco.Cidade);
             Assert.Equal(enderecoMock.Estado, returnedEndereco.Estado);
 
-            enderecoServiceMock.Verify(s => s.GetEnderecoByCepAsync(cep), Times.Once);
-            enderecoRepositoryMock.Verify(r => r.AddAsync(enderecoMock), Times.Once);
+            enderecoServiceMock.Verify(s => s.ImportarPorCep(cep), Times.Once);
         }
 
     }

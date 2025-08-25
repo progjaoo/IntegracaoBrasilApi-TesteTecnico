@@ -1,5 +1,4 @@
 ﻿using Flurl.Http;
-using IntegracaoWebApi.Application.DTOs;
 using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
 
