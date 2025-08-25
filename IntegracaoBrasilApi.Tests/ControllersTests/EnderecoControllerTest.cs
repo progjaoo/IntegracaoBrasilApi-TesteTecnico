@@ -9,7 +9,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
 {
     public class EnderecoControllerTest
     {
-        private readonly Mock<IBrasilApiService> _serviceMock = new();
+        private readonly Mock<IEnderecoService> _serviceMock = new();
         private readonly Mock<IEnderecoRepository> _repoMock = new();
         private readonly Mock<ILogger<EnderecosController>> _loggerMock = new();
 
@@ -26,8 +26,8 @@ namespace IntegracaoWebApi.Tests.ControllersTests
                 Estado = "RJ"
             };
 
-            var brasilApiServiceMock = new Mock<IBrasilApiService>();
-            brasilApiServiceMock.Setup(s => s.GetEnderecoByCepAsync(cep))
+            var enderecoServiceMock = new Mock<IEnderecoService>();
+            enderecoServiceMock.Setup(s => s.GetEnderecoByCepAsync(cep))
                                 .ReturnsAsync(enderecoMock);
 
             var enderecoRepositoryMock = new Mock<IEnderecoRepository>();
@@ -37,8 +37,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             var loggerMock = Mock.Of<ILogger<EnderecosController>>();
 
             var controller = new EnderecosController(
-                brasilApiServiceMock.Object,
-                enderecoRepositoryMock.Object,
+                enderecoServiceMock.Object,
                 loggerMock
             );
 
@@ -53,7 +52,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             Assert.Equal(enderecoMock.Cidade, returnedEndereco.Cidade);
             Assert.Equal(enderecoMock.Estado, returnedEndereco.Estado);
 
-            brasilApiServiceMock.Verify(s => s.GetEnderecoByCepAsync(cep), Times.Once);
+            enderecoServiceMock.Verify(s => s.GetEnderecoByCepAsync(cep), Times.Once);
             enderecoRepositoryMock.Verify(r => r.AddAsync(enderecoMock), Times.Once);
         }
 

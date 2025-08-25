@@ -9,7 +9,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
 {
     public class BancoControllerTests()
     {
-        private readonly Mock<IBrasilApiService> _serviceMock = new();
+        private readonly Mock<IBancoService> _serviceMock = new();
         private readonly Mock<IBancoRepository> _repoMock = new();
         private readonly Mock<ILogger<BancoController>> _loggerMock = new();
 
@@ -25,7 +25,7 @@ namespace IntegracaoWebApi.Tests.ControllersTests
                 Ispb = "00122327"
             };
 
-            var brasilApiServiceMock = new Mock<IBrasilApiService>();
+            var brasilApiServiceMock = new Mock<IBancoService>();
             brasilApiServiceMock.Setup(s => s.GetBancoByCodeAsync(codigo))
                                 .ReturnsAsync(bancoMock);
 
@@ -40,7 +40,6 @@ namespace IntegracaoWebApi.Tests.ControllersTests
 
             var controller = new BancoController(
                 brasilApiServiceMock.Object,
-                bancoRepositoryMock.Object,
                 loggerMock
             );
 
