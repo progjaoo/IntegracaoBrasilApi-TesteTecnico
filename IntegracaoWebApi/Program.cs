@@ -1,7 +1,7 @@
+using IntegracaoWebApi.Application.Services;
 using IntegracaoWebApi.Core.Interfaces;
 using IntegracaoWebApi.Infrastructure.Data;
 using IntegracaoWebApi.Infrastructure.Repositories;
-using IntegracaoWebApi.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -36,7 +36,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IBancoRepository, BancoRepository>();
 builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
-builder.Services.AddScoped<IBrasilApiService, BrasilApiService>();
+builder.Services.AddScoped<IBancoService, BancoService>();
+builder.Services.AddScoped<IEnderecoService, EnderecoService>();
 
 var app = builder.Build();
 

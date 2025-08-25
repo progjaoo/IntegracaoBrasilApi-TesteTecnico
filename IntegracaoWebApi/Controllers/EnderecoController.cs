@@ -8,17 +8,14 @@ namespace IntegracaoWebApi.Controllers
     [Route("api/[controller]")]
     public class EnderecosController : ControllerBase
     {
-        private readonly IBrasilApiService _brasilApiService;
-        private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IEnderecoService _enderecoService;
         private readonly ILogger<EnderecosController> _logger;
 
         public EnderecosController(
-            IBrasilApiService brasilApiService,
-            IEnderecoRepository enderecoRepository,
+            IEnderecoService enderecoService,
             ILogger<EnderecosController> logger)
         {
-            _brasilApiService = brasilApiService;
-            _enderecoRepository = enderecoRepository;
+            _enderecoService = enderecoService;
             _logger = logger;
         }
         /// <summary>
@@ -29,7 +26,7 @@ namespace IntegracaoWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Endereco>>> GetAll()
         {
-            var enderecos = await _enderecoRepository.GetAllAsync();
+            var enderecos = await _enderecoService.GetAllAsync();
             return Ok(enderecos);
         }
         /// <summary>
@@ -44,11 +41,9 @@ namespace IntegracaoWebApi.Controllers
         {
             try
             {
-                var endereco = await _brasilApiService.GetEnderecoByCepAsync(cep);
+                var endereco = await _enderecoService.GetEnderecoByCepAsync(cep);
                 if (endereco is null)
                     return NotFound(new { message = $"CEP '{cep}' não encontrado na BrasilAPI." });
-
-                await _enderecoRepository.AddAsync(endereco);
 
                 return Ok(endereco);
             }
@@ -61,28 +56,23 @@ namespace IntegracaoWebApi.Controllers
         /// <summary>
         /// Importa um Endereço da BrasilAPI para o banco de dados local.
         /// </summary>
-        /// <param name="code">Código do Endereço</param>
+        /// <param name="cep">Cep do Endereço</param>
         /// <returns>Endereço importado</returns>
         [HttpPost("importar/{cep}")]
         public async Task<IActionResult> ImportarPorCep(string cep)
         {
             try
             {
-                var endereco = await _brasilApiService.GetEnderecoByCepAsync(cep);
+                var endereco = await _enderecoService.ImportarPorCep(cep);
                 if (endereco is null)
                     return NotFound(new { message = $"CEP '{cep}' não encontrado na BrasilAPI." });
 
-                await _enderecoRepository.AddAsync(endereco);
-
-                var todos = await _enderecoRepository.GetAllAsync();
-                var persisted = todos.FirstOrDefault(e => e.Cep == cep) ?? endereco;
-
-                return CreatedAtAction(nameof(GetByCep), new { cep = persisted.Cep }, persisted);
+                return CreatedAtAction(nameof(GetByCep), new { cep = endereco.Cep }, endereco);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Falha ao importar CEP {cep} da BrasilAPI.", cep);
-                return StatusCode(502, new { message = "Erro ao consumir a BrasilAPI de CEP." });
+                return StatusCode(502, new { message = "Erro ao importar a BrasilAPI de CEP." });
             }
         }
     }

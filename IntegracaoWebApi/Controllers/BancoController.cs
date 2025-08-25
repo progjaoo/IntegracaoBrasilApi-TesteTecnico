@@ -1,4 +1,5 @@
-﻿using IntegracaoWebApi.Core.Entities;
+﻿using IntegracaoWebApi.Application.DTOs;
+using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,27 +9,26 @@ namespace IntegracaoWebApi.Controllers
     [Route("api/[controller]")]
     public class BancoController : ControllerBase
     {
-        private readonly IBrasilApiService _brasilApiService;
-        private readonly IBancoRepository _bancoRepository;
+        private readonly IBancoService _bancoService;
         private readonly ILogger<BancoController> _logger;
 
-        public BancoController(IBrasilApiService brasilApiService,
-            IBancoRepository bancoRepository, ILogger<BancoController> logger)
+        public BancoController(IBancoService bancoService,
+            ILogger<BancoController> logger)
         {
-            _brasilApiService = brasilApiService;
-            _bancoRepository = bancoRepository;
+            _bancoService = bancoService;
             _logger = logger;
         }
+       
         /// <summary>
         /// Retorna todos os bancos disponíveis na BrasilAPI.
         /// </summary>
         /// <returns>Lista de bancos</returns>
         /// <response code="200">Sucesso</response>
-        [HttpGet]
+        [HttpGet("todosBancos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Banco>>> GetAll()
         {
-            var bancos = await _brasilApiService.GetBancosAsync();
+            var bancos = await _bancoService.GetBancosAsync();
             return Ok(bancos);
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace IntegracaoWebApi.Controllers
         {
             try
             {
-                var banco = await _brasilApiService.GetBancoByCodeAsync(code);
+                var banco = await _bancoService.GetBancoByCodeAsync(code);
                 if (banco is null)
                     return NotFound(new { message = $"Banco com código '{code}' não encontrado na BrasilAPI." });
 
@@ -65,21 +65,16 @@ namespace IntegracaoWebApi.Controllers
         {
             try
             {
-                var banco = await _brasilApiService.GetBancoByCodeAsync(code);
-                if (banco is null)
-                    return NotFound(new { message = $"Banco com código '{code}' não encontrado na BrasilAPI." });
+                var banco = await _bancoService.ImportarBancoPorCodigo(code);
+                if (banco == null)
+                    return NotFound(new { message = $"Banco com código '{code}' não encontrado." });
 
-                await _bancoRepository.AddRangeAsync(new List<Banco> { banco });
-
-                var todos = await _bancoRepository.GetAllAsync();
-                var persisted = todos.FirstOrDefault(b => b.Codigo == code) ?? banco;
-
-                return CreatedAtAction(nameof(GetByCode), new { code = persisted.Codigo }, persisted);
+                return CreatedAtAction(nameof(GetByCode), new { code = banco.Codigo }, banco);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Falha ao importar banco código {code} da BrasilAPI.", code);
-                return StatusCode(502, new { message = "Erro ao consumir a BrasilAPI de bancos." });
+                _logger.LogError(ex, "Falha ao importar banco código {code}.", code);
+                return StatusCode(502, new { message = "Erro ao importar banco." });
             }
         }
     }

@@ -1,16 +1,19 @@
 ﻿using Flurl.Http;
+using IntegracaoWebApi.Application.DTOs;
 using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
 
-namespace IntegracaoWebApi.Infrastructure.Services
+namespace IntegracaoWebApi.Application.Services
 {
-    public class BrasilApiService : IBrasilApiService
+    public class BancoService : IBancoService
     {
-        private readonly ILogger<BrasilApiService> _logger;
-
-        public BrasilApiService(ILogger<BrasilApiService> logger)
+        private readonly ILogger<BancoService> _logger;
+        private readonly IBancoRepository _bancoRepository;
+        public BancoService(ILogger<BancoService> logger,
+            IBancoRepository bancoRepository)
         {
             _logger = logger;
+            _bancoRepository = bancoRepository;
         }
 
         public async Task<List<Banco>> GetBancosAsync()
@@ -41,19 +44,17 @@ namespace IntegracaoWebApi.Infrastructure.Services
                 return null;
             }
         }
-        public async Task<Endereco?> GetEnderecoByCepAsync(string cep)
+
+        public async Task<Banco?> ImportarBancoPorCodigo(int code)
         {
-            try
-            {
-                var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
-                var result = await url.GetJsonAsync<Endereco>();
-                return result;
-            }
-            catch (FlurlHttpException ex)
-            {
-                _logger.LogError(ex, "Erro ao consumir BrasilAPI - cep {cep}", cep);
-                throw;
-            }
+            var bancoApi = await GetBancoByCodeAsync(code);
+            if (bancoApi == null) return null;
+
+            await _bancoRepository.AddRangeAsync(new List<Banco> { bancoApi });
+
+            var persisted = await GetBancoByCodeAsync(code);
+            return persisted;
         }
+
     }
 }
