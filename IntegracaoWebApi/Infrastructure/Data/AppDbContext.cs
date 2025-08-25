@@ -10,6 +10,7 @@ namespace IntegracaoWebApi.Infrastructure.Data
 
         public DbSet<Banco> Bancos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

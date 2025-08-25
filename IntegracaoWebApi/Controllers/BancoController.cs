@@ -1,5 +1,6 @@
 ﻿using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegracaoWebApi.Controllers
@@ -60,6 +61,7 @@ namespace IntegracaoWebApi.Controllers
         /// <param name="code">Código do banco</param>
         /// <returns>Banco importado</returns>
         [HttpPost("importar/{code}")]
+        [Authorize]
         public async Task<IActionResult> ImportarPorCode(int code)
         {
             try

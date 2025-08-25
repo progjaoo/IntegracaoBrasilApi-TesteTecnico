@@ -1,5 +1,6 @@
 ﻿using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegracaoWebApi.Controllers
@@ -59,6 +60,7 @@ namespace IntegracaoWebApi.Controllers
         /// <param name="cep">Cep do Endereço</param>
         /// <returns>Endereço importado</returns>
         [HttpPost("importar/{cep}")]
+        [Authorize]
         public async Task<IActionResult> ImportarPorCep(string cep)
         {
             try
