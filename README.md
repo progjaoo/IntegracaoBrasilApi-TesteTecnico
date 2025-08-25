@@ -24,7 +24,7 @@ O projeto implementa **autenticação JWT** e tratamento de erros centralizado a
 - Importar bancos para o banco de dados local.
 - Buscar bancos pelo nome aproximado (usando EF.Functions.Like) -> **Parte da pedida de consultas complexas**
 - Query SQL pura -> **Parte da pedida de consultas complexas**
-- 
+  
 ### 📍 Endereços:
 
 - Listar todos os endereços (CEPs) armazenados localmente.
