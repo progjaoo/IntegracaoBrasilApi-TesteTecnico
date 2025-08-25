@@ -5,7 +5,7 @@ Este projeto é uma **API ASP.NET Core versão 8.0** para integração com a **B
 
 O projeto foi desenvolvido seguindo:
 - **Arquitetura Limpa** (Clean Architecture) separando responsabilidades em camadas, inversões de dependência.
-- **conceitos de DDD**: Modelo de negócios com Entidades, repositórios e o domínio depende de abstrações não implementações.
+- **Conceitos de DDD**: Modelo de negócios com Entidades, repositórios e o domínio depende de abstrações não implementações.
 - **Princípios SOLID**: Cada classe possui uma responsabilidade, fechadas para modificações e aberto a extensões com interfaces, dependência de abstrações e interfaces coesas.
 
 ### 📖 Estrutura do Projeto
