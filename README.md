@@ -1,105 +1,91 @@
-🚀 Integração Web API com BrasilAPI
-📖 Visão Geral
-Este projeto é uma API desenvolvida em ASP.NET Core 8.0 que se integra com a BrasilAPI para consultar e importar informações de bancos e endereços (por CEP) para uma base de dados local.
+# Integração Web API
 
-A solução foi estruturada seguindo os princípios da Arquitetura Limpa (Clean Architecture), garantindo a separação de responsabilidades em camadas bem definidas:
+## Visão Geral
+Este projeto é uma **API ASP.NET Core versão 8.0** para integração com a **BrasilAPI**, permitindo consultar e importar informações de bancos e endereços (CEPs) para um banco de dados local.  
+O projeto foi desenvolvido seguindo a **arquitetura limpa** (Clean Architecture), separando responsabilidades em camadas:
 
-IntegracaoWebApi.Core: Contém as entidades de domínio, interfaces e exceções personalizadas.
+- **IntegracaoWebApi.Core**: Contém as entidades do domínio, interfaces e exceções personalizadas.
+- **IntegracaoWebApi.Application**: Contém os serviços e DTOs para manipulação da lógica de negócio.
+- **IntegracaoWebApi.Infrastructure**: Contém a implementação de repositórios, configurações do EF Core, autenticação e acesso a dados.
+- **IntegracaoWebApi**: Projeto principal da API com controllers, middlewares e configuração de rotas.
+- **IntegracaoWebApi.Tests**: Projeto para testes unitários das controllers.
 
-IntegracaoWebApi.Application: Contém os serviços de aplicação, DTOs e a lógica de negócio.
+O projeto implementa **autenticação JWT** e tratamento de erros centralizado através de **Middleware** customizado, retornando mensagens claras em casos de exceção.
 
-IntegracaoWebApi.Infrastructure: Implementa o acesso a dados com Entity Framework Core, repositórios, e a lógica de autenticação.
+---
 
-IntegracaoWebApi: Camada de apresentação da API (Controllers), middlewares e configurações de inicialização.
+## Funcionalidades
 
-IntegracaoWebApi.Tests: Projeto dedicado aos testes unitários das controllers.
+### Bancos:
 
-A segurança é garantida por autenticação via JWT Bearer Token, e o tratamento de erros é centralizado através de um Middleware customizado para fornecer respostas claras e consistentes.
+- Listar todos os bancos disponíveis na BrasilAPI.
+- Listar todos os bancos disponíveis no banco local.
+- Consultar banco por código no BrasilApi.
+- Importar bancos para o banco de dados local.
 
-✨ Funcionalidades
-🏦 Bancos
-GET /api/bancos/externo: Lista todos os bancos disponíveis na BrasilAPI.
+### Endereços:
 
-GET /api/bancos/local: Lista todos os bancos já importados para o banco de dados local.
+- Listar todos os endereços (CEPs) armazenados localmente.
+- Consultar endereço por CEP.
+- Importar endereços da BrasilAPI para o banco de dados local.
 
-GET /api/bancos/externo/{codigo}: Consulta um banco específico na BrasilAPI pelo seu código.
+### Autenticação 
 
-POST /api/bancos/importar: Importa todos os bancos da BrasilAPI para o banco de dados local. (Requer autenticação)
+- Controle de autenticação e autorização para operações de importação.
+- O cadastro de usuários cria automaticamente o role User.
+- Operações de importação (POST) exigem autenticação via JWT Bearer Token.
+- Se registre e autentique no endpoint de Login, Copie o token e cole no Cabeçalho Authorize com a palavra Bearer + Token Copiado
 
-📍 Endereços (CEP)
-GET /api/enderecos: Lista todos os endereços (CEPs) armazenados localmente.
+## Tratamento de Erros
+O projeto utiliza Middleware customizado (ErrorHandlingMiddleware) que captura exceções personalizadas:
 
-GET /api/enderecos/{cep}: Consulta um endereço específico na BrasilAPI pelo CEP.
+- NotFoundException: Retorna 404 Not Found.
+- ExternalApiException: Retorna 502 Bad Gateway.
+- UnauthorizedException: Retorna 401 Unauthorized.
 
-POST /api/enderecos/importar/{cep}: Consulta um CEP na BrasilAPI e o importa para o banco de dados local. (Requer autenticação)
+Qualquer outro erro inesperado retorna 500 Internal Server Error.
 
-🔐 Autenticação
-POST /api/auth/registrar: Registra um novo usuário (com a role "User" padrão).
+## Testes Unitários
+- As controllers possuem testes unitários no projeto IntegracaoWebApi.Tests.
 
-POST /api/auth/login: Autentica um usuário e retorna um JWT Token.
+```bash
 
-Autorização: Os endpoints de importação (POST) são protegidos e exigem um JWT Bearer Token válido no cabeçalho Authorization.
-
-🛡️ Tratamento de Erros
-A API utiliza um ErrorHandlingMiddleware customizado que captura exceções e retorna os seguintes status codes:
-
-NotFoundException: Retorna 404 Not Found.
-
-ExternalApiException: Retorna 502 Bad Gateway (falha na comunicação com a BrasilAPI).
-
-UnauthorizedException: Retorna 401 Unauthorized.
-
-Qualquer outra exceção não tratada retorna 500 Internal Server Error.
-
-🧪 Testes Unitários
-O projeto IntegracaoWebApi.Tests contém testes unitários para as controllers. Para executá-los, utilize o comando:
-
-```
 dotnet test
+
 ```
 
-🛠️ Instruções de Instalação
-Pré-requisitos
-.NET 8 SDK
+## Instruções de Instalação
 
-SQL Server (ou outro banco de dados compatível com EF Core)
+### Pré-requisitos
 
-Visual Studio 2022 ou VS Code
+- .NET 8 SDK
+- SQL Server (ou outra base compatível)
+- Visual Studio 2022 ou VS Code
 
-Passos
-Clone o repositório:
+### Passos
 
-```git clone <URL_DO_REPOSITORIO>
+1. **Clone o repositório**
+
+```bash
+git clone <URL_DO_REPOSITORIO>
 cd IntegracaoWebApi
-Configure a String de Conexão:
 ```
-No arquivo appsettings.json, ajuste a DefaultConnection para apontar para o seu banco de dados:
 
-JSON
+2. No arquivo appsettings.json, configure a string de conexão do seu banco de dados local:
 
 "ConnectionStrings": {
-  "DefaultConnection": "Server=SEU_SERVIDOR;Database=IntegracaoWebApiDb;Trusted_Connection=True;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=localhost;Database=IntegracaoWebApiDb;Trusted_Connection=True;"
 }
 
-Aplique as Migrations:
-Para criar o banco de dados e as tabelas, execute os seguintes comandos a partir da pasta raiz do projeto:
+3. Aplicar Migrations para criar o banco de dados e todas as tabelas (Bancos, Enderecos, Users
 
-Bash
+- Rode dotnet ef migrations add InitialCreate no caminho do projeto Infrastructure/Data
+- Rode dotnet ef database update
 
-# Cria o arquivo de migration (se ainda não existir na pasta Infrastructure/Data)
-```
-dotnet ef migrations add InitialCreate
-```
-# Aplica a migration no banco de dados
-```
-dotnet ef database update
-```
-Execute a API:
-```
-dotnet run --project IntegracaoWebApi
-```
+4. Rodar a API
 
-🔗 Documentação da API Externa
-As consultas externas são realizadas através da BrasilAPI. A documentação completa pode ser encontrada em:
+- dotnet run --project IntegracaoWebApi
 
-https://brasilapi.com.br/
+## DOCUMENTAÇÃO DA API EXTERNNA
+
+- https://brasilapi.com.br/
