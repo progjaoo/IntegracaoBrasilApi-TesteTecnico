@@ -1,8 +1,8 @@
 # 🚀 Integração Web API com BrasilAPI
 
 ## 📖 Visão Geral
-Este projeto é uma **API ASP.NET Core versão 8.0** para integração com a **BrasilAPI**, permitindo consultar e importar informações de bancos e endereços (CEPs) para um banco de dados local.  
-O projeto foi desenvolvido seguindo a **arquitetura limpa** (Clean Architecture), separando responsabilidades em camadas:
+Este projeto é uma **API ASP.NET Core versão 8.0** para integração com a **BrasilAPI**, permitindo consultar e importar informações de bancos e endereços (CEPs) para um banco de dados local. 
+O projeto foi desenvolvido seguindo a **Arquitetura Limpa** (Clean Architecture), separando responsabilidades em camadas, conceitos de DDD e os princípios SOLID:
 
 - **IntegracaoWebApi.Core**: Contém as entidades do domínio, interfaces e exceções personalizadas.
 - **IntegracaoWebApi.Application**: Contém os serviços e DTOs para manipulação da lógica de negócio.
