@@ -1,4 +1,5 @@
 using IntegracaoWebApi.Application.Services;
+using IntegracaoWebApi.Core.Exception;
 using IntegracaoWebApi.Core.Interfaces;
 using IntegracaoWebApi.Infrastructure.Auth;
 using IntegracaoWebApi.Infrastructure.Data;
@@ -119,6 +120,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

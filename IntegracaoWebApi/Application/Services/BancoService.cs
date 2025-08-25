@@ -14,7 +14,8 @@ namespace IntegracaoWebApi.Application.Services
             _logger = logger;
             _bancoRepository = bancoRepository;
         }
-
+        public async Task<List<Banco>> GetAllAsync() =>
+            await _bancoRepository.GetAllAsync();
         public async Task<List<Banco>> GetBancosAsync()
         {
             try
