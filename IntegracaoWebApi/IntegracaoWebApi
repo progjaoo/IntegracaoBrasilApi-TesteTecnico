@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IntegracaoWebApi</name>
+    </assembly>
+    <members>
+        <member name="M:IntegracaoWebApi.Controllers.EnderecosController.GetAll">
+            <summary>
+            Retorna todos os bancos disponíveis na BrasilAPI.
+            </summary>
+            <returns>Lista de bancos</returns>
+        </member>
+        <member name="M:IntegracaoWebApi.Controllers.EnderecosController.GetByCep(System.String)">
+            <summary>
+            Busca um banco pelo código na BrasilAPI.
+            </summary>
+            <param name="code">Código do banco</param>
+            <returns>Banco correspondente ao código informado</returns>
+        </member>
+        <member name="M:IntegracaoWebApi.Controllers.EnderecosController.ImportarPorCep(System.String)">
+            <summary>
+            Importa um banco da BrasilAPI para o banco de dados local.
+            </summary>
+            <param name="code">Código do banco</param>
+            <returns>Banco importado</returns>
+        </member>
+        <member name="T:IntegracaoWebApi.Infrastructure.Data.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:IntegracaoWebApi.Infrastructure.Data.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:IntegracaoWebApi.Infrastructure.Data.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:IntegracaoWebApi.Infrastructure.Data.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,73 @@
+# Arquivos de configuração específicos do usuário
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Arquivos de configuração específicos do Rider
+.idea/
+*.sln.iml
+
+# Arquivos de configuração específicos do Visual Studio Code
+.vscode/
+
+# Arquivos e diretórios do Visual Studio
+.vs/
+ProjectSettings/
+*.csproj.user
+*.vcxproj.user
+
+# Arquivos de compilação e de saída
+bin/
+obj/
+artifacts/
+
+# Pacotes NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/repositories.config
+
+# Logs e arquivos de teste
+*.log
+*.tlog
+*.trx
+*.xml
+TestResults/
+
+# Arquivos de cache e temporários
+*.[Pp]db
+*.[Cc]ache
+*.[Tt]emp
+*.tmp
+*.bak
+
+# Arquivos gerados pelo sistema operacional
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.lnk
+
+# Arquivos de publicação
+publish/
+*.pubxml
+*.pubxml.user
+
+# Configurações de ambiente e segredos
+appsettings.Development.json
+secrets.json
+*.env
+
+# Ferramentas .NET locais
+.config/dotnet-tools.json
+
+# Arquivos de cache do EF Core
+*.efbundle
+
+# Fim do arquivo
