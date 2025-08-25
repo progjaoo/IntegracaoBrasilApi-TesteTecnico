@@ -2,7 +2,10 @@
 
 ## 📖 Visão Geral
 Este projeto é uma **API ASP.NET Core versão 8.0** para integração com a **BrasilAPI**, permitindo consultar e importar informações de bancos e endereços (CEPs) para um banco de dados local. 
-O projeto foi desenvolvido seguindo a **Arquitetura Limpa** (Clean Architecture), separando responsabilidades em camadas, conceitos de DDD e os princípios SOLID:
+O projeto foi desenvolvido seguindo:
+- **Arquitetura Limpa** (Clean Architecture) separando responsabilidades em camadas, inversões de dependência.
+- **conceitos de DDD**: Modelo de negócios com Entidades, repositórios e o domínio depende de abstrações não implementações.
+- **Princípios SOLID**: Cada classe possui uma responsabilidade, fechadas para modificações e aberto a extensões com interfaces, dependência de abstrações e interfaces coesas.
 
 - **IntegracaoWebApi.Core**: Contém as entidades do domínio, interfaces e exceções personalizadas.
 - **IntegracaoWebApi.Application**: Contém os serviços e DTOs para manipulação da lógica de negócio.
