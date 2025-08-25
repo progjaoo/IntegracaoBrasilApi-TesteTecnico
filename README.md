@@ -15,18 +15,18 @@ O projeto implementa **autenticação JWT** e tratamento de erros centralizado a
 ---
 ## Funcionalidades
 
-### BANCOS:
+### Bancos:
 - Listar todos os bancos disponíveis na BrasilAPI.
 - Listar todos os bancos disponíveis no banco local.
 - Consultar banco por código no BrasilApi.
 - Importar bancos para o banco de dados local.
 
-### ENDEREÇOS:
+### Endereços:
 - Listar todos os endereços (CEPs) armazenados localmente.
 - Consultar endereço por CEP.
 - Importar endereços da BrasilAPI para o banco de dados local.
 
-### AUTENTICAÇÃO 
+### Autenticação 
 - Controle de autenticação e autorização para operações de importação.
 - O cadastro de usuários cria automaticamente o role User.
 - Operações de importação (POST) exigem autenticação via JWT Bearer Token.
