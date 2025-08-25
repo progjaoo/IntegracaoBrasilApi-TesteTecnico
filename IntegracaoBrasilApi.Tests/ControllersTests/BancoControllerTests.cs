@@ -1,9 +1,6 @@
 ﻿using IntegracaoWebApi.Controllers;
 using IntegracaoWebApi.Core.Entities;
 using IntegracaoWebApi.Core.Interfaces;
-using IntegracaoWebApi.Infrastructure.Data;
-using IntegracaoWebApi.Infrastructure.Repositories;
-using IntegracaoWebApi.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -24,8 +21,8 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             var bancoMock = new Banco
             {
                 Codigo = codigo,
-                Nome = "Banco Teste",
-                Ispb = "12345678"
+                Nome = "SANTINVEST S.A. - CFI",
+                Ispb = "00122327"
             };
 
             var brasilApiServiceMock = new Mock<IBrasilApiService>();
@@ -36,6 +33,9 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             bancoRepositoryMock.Setup(r => r.AddRangeAsync(It.IsAny<List<Banco>>()))
                                .Returns(Task.CompletedTask);
 
+            bancoRepositoryMock.Setup(r => r.GetAllAsync())
+                               .ReturnsAsync(new List<Banco> { bancoMock });
+
             var loggerMock = Mock.Of<ILogger<BancoController>>();
 
             var controller = new BancoController(
@@ -45,11 +45,11 @@ namespace IntegracaoWebApi.Tests.ControllersTests
             );
 
             // Act
-            var result = await controller.GetByCode(codigo);
+            var result = await controller.ImportarPorCode(codigo);
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var returnedBanco = Assert.IsType<Banco>(okResult.Value);
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result);
+            var returnedBanco = Assert.IsType<Banco>(createdResult.Value);
 
             Assert.Equal(codigo, returnedBanco.Codigo);
             Assert.Equal(bancoMock.Nome, returnedBanco.Nome);
