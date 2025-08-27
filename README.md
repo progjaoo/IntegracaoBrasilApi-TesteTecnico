@@ -88,6 +88,7 @@ cd IntegracaoWebApi
 
 - Rode dotnet ef migrations add InitialCreate no caminho do projeto Infrastructure/Data
 - Rode dotnet ef database update
+- Há um arquivo SQL nomeado "Script_Sql_IntegracaoApiBrasil" para rodar e criar o banco direto caso não queira rodar as migrations
 
 4. Rodar a API
 
